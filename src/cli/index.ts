@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import { validateCommand } from './commands';
+import { validateCommand, validateMarkdownCommand } from './commands';
 
 const program = new Command();
 
@@ -11,5 +11,6 @@ program
   .version('0.0.1');
 
 program.addCommand(validateCommand);
+program.addCommand(validateMarkdownCommand);
 
 program.parse(process.argv);
