@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/cloud-on-prem/mermaid-validator/compare/v1.3.0...v1.3.1) (2025-06-30)
+
+
+### Bug Fixes
+
+* ensure dom purify errors are not propogated to end users ([#7](https://github.com/cloud-on-prem/mermaid-validator/issues/7)) ([0d9a5cb](https://github.com/cloud-on-prem/mermaid-validator/commit/0d9a5cbb3686b9895212f758798a74437e285feb))
+
 ## [1.3.0](https://github.com/cloud-on-prem/mermaid-validator/compare/v1.2.0...v1.3.0) (2025-06-30)
 
 
