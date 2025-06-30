@@ -28,6 +28,9 @@ npm run build
 
 # Test the CLI locally
 node dist/index.js validate tests/fixtures/valid.mmd
+
+# Test string validation
+node dist/index.js validate "flowchart TD; A-->B;" --string
 ```
 
 ### Scripts

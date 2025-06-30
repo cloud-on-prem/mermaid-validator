@@ -12,24 +12,45 @@ npm install mermaid-validate -g
 
 ## Usage
 
+### Validate from File
+
 ```bash
 mermaid-validate validate <filePath> [options]
+```
+
+### Validate from String
+
+```bash
+mermaid-validate validate "<diagram-string>" --string [options]
 ```
 
 ### Using NPX (Recommended)
 
 ```bash
+# Validate file
 npx mermaid-validate validate <filePath> [options]
+
+# Validate string
+npx mermaid-validate validate "<diagram-string>" --string [options]
 ```
 
 ### Examples
 
 ```bash
-# Validate a single diagram
+# Validate a diagram file
 mermaid-validate validate diagram.mmd
 
-# Using NPX
+# Validate a diagram string directly
+mermaid-validate validate "flowchart TD; A-->B;" --string
+
+# Using NPX with file
 npx mermaid-validate validate flowchart.mmd
+
+# Using NPX with string
+npx mermaid-validate validate "sequenceDiagram; A->>B: Hello" --string
+
+# Specify diagram type (optional)
+mermaid-validate validate "pie title Pets; Dogs: 50; Cats: 30" --string --type pie
 ```
 
 ### Programmatic Usage
