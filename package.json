@@ -1,0 +1,41 @@
+{
+  "name": "mermaid-validate",
+  "version": "0.0.1",
+  "description": "A CLI to validate mermaid diagrams",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "start": "node dist/index.js",
+    "dev": "vite --watch",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "bin": {
+    "mermaid-validate": "dist/index.js"
+  },
+  "keywords": [
+    "mermaid",
+    "validation",
+    "cli"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@typescript-eslint/eslint-plugin": "^8.35.0",
+    "@typescript-eslint/parser": "^8.35.0",
+    "eslint": "^8.57.0",
+    "jsdom": "^26.1.0",
+    "prettier": "^3.3.2",
+    "typescript": "^5.5.2",
+    "vite": "^5.3.1",
+    "vitest": "^1.6.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "mermaid": "^11.7.0"
+  }
+}
