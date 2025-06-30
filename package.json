@@ -4,6 +4,19 @@
   "description": "A CLI to validate mermaid diagrams",
   "main": "dist/index.js",
   "type": "module",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:cloud-on-prem/mermaid-validator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cloud-on-prem/mermaid-validator/issues"
+  },
+  "homepage": "https://github.com/cloud-on-prem/mermaid-validator#readme",
   "scripts": {
     "build": "vite build",
     "start": "node dist/index.js",
