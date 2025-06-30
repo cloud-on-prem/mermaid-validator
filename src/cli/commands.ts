@@ -4,12 +4,33 @@ import { validate } from '../core/validator';
 import { logger } from '../utils/logger';
 
 export const validateCommand = new Command('validate')
-  .description('Validate a Mermaid diagram file')
-  .arguments('<filePath>')
+  .description('Validate a Mermaid diagram from file or string')
+  .arguments('[input]')
   .option('-t, --type <diagramType>', 'The type of the Mermaid diagram')
-  .action(async (filePath, options) => {
+  .option('-s, --string', 'Treat input as diagram string instead of file path')
+  .action(async (input, options) => {
     try {
-      const diagram = fs.readFileSync(filePath, 'utf-8');
+      let diagram: string;
+
+      if (!input) {
+        logger.error('Please provide either a file path or diagram string');
+        process.exit(1);
+      }
+
+      if (options.string) {
+        // Treat input as diagram string
+        diagram = input;
+      } else {
+        // Treat input as file path (default behavior)
+        try {
+          diagram = fs.readFileSync(input, 'utf-8');
+        } catch (fileError) {
+          logger.error(`Error reading file: ${(fileError as Error).message}`);
+          logger.info('Tip: Use --string flag if you want to validate a diagram string directly');
+          process.exit(1);
+        }
+      }
+
       const result = await validate(diagram, options.type);
 
       if (result.isValid) {
