@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/cloud-on-prem/mermaid-validator/compare/v1.3.1...v1.3.2) (2025-06-30)
+
+
+### Bug Fixes
+
+* show package version ([#9](https://github.com/cloud-on-prem/mermaid-validator/issues/9)) ([1283ea7](https://github.com/cloud-on-prem/mermaid-validator/commit/1283ea7d97af51e4efee549df80550a86dd21e31))
+
 ## [1.3.1](https://github.com/cloud-on-prem/mermaid-validator/compare/v1.3.0...v1.3.1) (2025-06-30)
 
 
