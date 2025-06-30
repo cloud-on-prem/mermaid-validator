@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+# Fix corporate registry URLs in package-lock.json before commit
+node scripts/fix-package-lock.cjs
+
+# Add the fixed package-lock.json to the commit if it was modified
+if [ -f "package-lock.json" ]; then
+  git add package-lock.json
+fi

@@ -2,6 +2,8 @@
 
 A command-line tool to validate [Mermaid](https://mermaid.js.org/) diagrams.
 
+📖 **[Development Guide](./DEVELOPMENT.md)** - Setup, architecture, CI/CD, and contributing information
+
 ## Installation
 
 ```bash
@@ -20,17 +22,20 @@ mermaid-validate validate <filePath> [options]
 npx mermaid-validate validate <filePath> [options]
 ```
 
-### Development Build
+### Examples
 
 ```bash
-npm run build
-node dist/index.js validate <filePath> [options]
+# Validate a single diagram
+mermaid-validate validate diagram.mmd
+
+# Using NPX
+npx mermaid-validate validate flowchart.mmd
 ```
 
 ### Programmatic Usage
 
 ```typescript
-import { validate } from './src/core/validator';
+import { validate } from 'mermaid-validate';
 
 const result = await validate('flowchart TD; A-->B;', 'flowchart');
 console.log(result); // { isValid: true }
@@ -38,30 +43,6 @@ console.log(result); // { isValid: true }
 const invalidResult = await validate('flowchart TD; A--B;', 'flowchart');
 console.log(invalidResult); // { isValid: false, error: "..." }
 ```
-
-## Development
-
-### Scripts
-
-- `npm test` - Run tests
-- `npm run build` - Build the CLI
-- `npm run lint` - Run ESLint
-- `npm run format` - Format code with Prettier
-
-### Testing
-
-The project uses Vitest for testing with jsdom environment to support Mermaid's DOM requirements.
-
-```bash
-npm test
-```
-
-### Architecture
-
-- **Core Validator** (`src/core/validator.ts`) - Main validation logic using the full Mermaid library
-- **CLI Interface** (`src/cli/`) - Command-line interface using Commander.js
-- **Types** (`src/core/types.ts`) - TypeScript type definitions
-- **Utils** (`src/utils/`) - Utility functions like logging
 
 ## Supported Diagram Types
 
@@ -77,42 +58,37 @@ The validator supports all Mermaid diagram types including:
 - Git graphs
 - And more...
 
-## CI/CD & Publishing
+## Corporate Environment Support
 
-This project uses GitHub Actions for continuous integration and automated publishing to NPM.
+This CLI includes automatic support for corporate NPM registries. If you're working in a corporate environment where packages are downloaded from internal registries, the tool can automatically fix `package-lock.json` files to use public NPM registry URLs.
 
-### GitHub Actions Workflow
+### Quick Setup
 
-The CI/CD pipeline includes:
-- **Testing**: Runs tests on Node.js 18.x and 20.x
-- **Linting**: Ensures code quality with ESLint
-- **Building**: Compiles TypeScript to JavaScript
-- **CLI Testing**: Validates the built CLI works correctly
-- **Release Please**: Automated version management and changelog generation
-- **NPM Publishing**: Automatic publishing to NPM when releases are created
+1. Copy the environment template:
+   ```bash
+   cp .env.example .env
+   ```
 
-### Setting Up for Publishing
+2. Edit `.env` with your corporate registry URL:
+   ```bash
+   CORPORATE_REGISTRY=https://your-company.com/npm/
+   ```
 
-To enable automated NPM publishing, you need to:
+3. The pre-commit hook will automatically fix registry URLs when you commit.
 
-1. **Set up NPM Token**:
-   - Create an NPM account and generate an automation token
-   - Add it as `NPM_TOKEN` in your GitHub repository secrets
+For detailed configuration options, see [DEVELOPMENT.md](./DEVELOPMENT.md#corporate-environment-support).
 
-2. **Create Releases**:
-   - Use conventional commit messages (e.g., `feat:`, `fix:`, `chore:`)
-   - Release Please will automatically create release PRs
-   - Merge the release PR to trigger NPM publishing
+## Development
 
-### Conventional Commits
+For development setup, architecture details, CI/CD configuration, and contributing guidelines, see [DEVELOPMENT.md](./DEVELOPMENT.md).
 
-This project uses conventional commits for automated changelog generation:
-- `feat:` - New features
-- `fix:` - Bug fixes
-- `chore:` - Maintenance tasks
-- `docs:` - Documentation updates
-- `refactor:` - Code refactoring
-- `perf:` - Performance improvements
+Quick start for developers:
+```bash
+git clone git@github.com:cloud-on-prem/mermaid-validator.git
+cd mermaid-validator
+npm install
+npm test
+```
 
 ## License
 
