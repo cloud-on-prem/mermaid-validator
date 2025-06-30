@@ -12,13 +12,6 @@ const PUBLIC_REGISTRY = 'https://registry.npmjs.org/';
 
 function fixPackageLock() {
   try {
-    // Check if CORPORATE_REGISTRY environment variable is set
-    if (!CORPORATE_REGISTRY) {
-      console.log('CORPORATE_REGISTRY environment variable not set, skipping registry URL fix.');
-      console.log('Set CORPORATE_REGISTRY in your .env file or environment variables.');
-      return;
-    }
-
     // Check if package-lock.json exists
     if (!fs.existsSync(PACKAGE_LOCK_PATH)) {
       console.log('No package-lock.json found, skipping registry URL fix.');
@@ -27,26 +20,44 @@ function fixPackageLock() {
 
     // Read the package-lock.json file
     const packageLockContent = fs.readFileSync(PACKAGE_LOCK_PATH, 'utf8');
-    
-    // Check if corporate registry URLs are present
-    if (!packageLockContent.includes(CORPORATE_REGISTRY)) {
-      console.log('No corporate registry URLs found in package-lock.json');
-      return;
+    let fixedContent = packageLockContent;
+    let hasChanges = false;
+
+    // Fix corporate registry URLs if CORPORATE_REGISTRY is set
+    if (CORPORATE_REGISTRY && packageLockContent.includes(CORPORATE_REGISTRY)) {
+      console.log('Fixing corporate registry URLs in package-lock.json...');
+      fixedContent = fixedContent.replace(
+        new RegExp(CORPORATE_REGISTRY.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
+        PUBLIC_REGISTRY
+      );
+      hasChanges = true;
     }
 
-    console.log('Fixing corporate registry URLs in package-lock.json...');
+    // Fix any malformed URLs with double slashes
+    const malformedUrlRegex = /https:\/\/registry\.npmjs\.org\/\/([^/]+)\//g;
+    if (malformedUrlRegex.test(fixedContent)) {
+      console.log('Fixing malformed registry URLs in package-lock.json...');
+      fixedContent = fixedContent.replace(malformedUrlRegex, 'https://registry.npmjs.org/$1/');
+      hasChanges = true;
+    }
 
-    // Replace all occurrences of corporate registry with public registry
-    const fixedContent = packageLockContent.replace(
-      new RegExp(CORPORATE_REGISTRY.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
-      PUBLIC_REGISTRY
-    );
+    if (!hasChanges) {
+      if (!CORPORATE_REGISTRY) {
+        console.log('CORPORATE_REGISTRY environment variable not set and no malformed URLs found.');
+      } else {
+        console.log('No corporate registry URLs or malformed URLs found in package-lock.json');
+      }
+      return;
+    }
 
     // Write the fixed content back to the file
     fs.writeFileSync(PACKAGE_LOCK_PATH, fixedContent, 'utf8');
 
-    console.log('✅ Successfully replaced corporate registry URLs with public NPM registry URLs');
-    console.log(`   ${CORPORATE_REGISTRY} → ${PUBLIC_REGISTRY}`);
+    console.log('✅ Successfully fixed registry URLs in package-lock.json');
+    if (CORPORATE_REGISTRY) {
+      console.log(`   Corporate registry: ${CORPORATE_REGISTRY} → ${PUBLIC_REGISTRY}`);
+    }
+    console.log('   Fixed malformed double-slash URLs');
 
   } catch (error) {
     console.error('❌ Error fixing package-lock.json:', error.message);

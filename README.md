@@ -24,6 +24,12 @@ mermaid-validate validate <filePath> [options]
 mermaid-validate validate "<diagram-string>" --string [options]
 ```
 
+### Validate Markdown File
+
+```bash
+mermaid-validate validate-md <markdown-file> [options]
+```
+
 ### Using NPX (Recommended)
 
 ```bash
@@ -51,6 +57,15 @@ npx mermaid-validate validate "sequenceDiagram; A->>B: Hello" --string
 
 # Specify diagram type (optional)
 mermaid-validate validate "pie title Pets; Dogs: 50; Cats: 30" --string --type pie
+
+# Validate all Mermaid diagrams in a Markdown file
+mermaid-validate validate-md README.md
+
+# Validate with fail-fast (stop on first error)
+mermaid-validate validate-md docs/architecture.md --fail-fast
+
+# Using NPX with markdown
+npx mermaid-validate validate-md documentation.md
 ```
 
 ### Programmatic Usage
