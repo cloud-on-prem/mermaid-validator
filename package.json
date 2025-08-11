@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/cloud-on-prem/mermaid-validator#readme",
   "scripts": {
+    "prepare": "npm run build",
     "build": "vite build",
     "start": "node dist/index.js",
     "dev": "vite --watch",

@@ -9,7 +9,7 @@ export default defineConfig({
       formats: ['es']
     },
     rollupOptions: {
-      external: ['mermaid', 'commander', 'chalk', 'fs', 'path', 'marked'],
+      external: ['mermaid', 'commander', 'chalk', 'fs', 'path', 'marked', 'url'],
     },
     target: 'node18',
     outDir: 'dist',
